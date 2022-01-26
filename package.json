@@ -1,7 +1,7 @@
 {
-  "name": "goit-react-hw-04-hooks-phonebook",
+  "name": "goit-react-hw-06-phonebook",
   "version": "0.1.0",
-  "homepage": "https://l-bohdan-l.github.io/goit-react-hw-04-hooks-phonebook/",
+  "homepage": "https://l-bohdan-l.github.io/goit-react-hw-06-phonebook/",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.15.1",
@@ -13,6 +13,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
+    "redux": "^4.1.2",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
@@ -26,13 +27,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/l-Bohdan-l/goit-react-hw-04-hooks-phonebook"
+    "url": "git+https://github.com/l-Bohdan-l/goit-react-hw-06-phonebook"
   },
   "keywords": [],
   "author": "Bohdan Papushoi",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/l-Bohdan-l/goit-react-hw-04-hooks-phonebook/issues"
+    "url": "https://github.com/l-Bohdan-l/goit-react-hw-06-phonebook/issues"
   },
   "eslintConfig": {
     "extends": [
