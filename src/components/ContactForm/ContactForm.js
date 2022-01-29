@@ -1,8 +1,17 @@
 import styles from './ContactForm.module.scss';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
+import { addContact } from '../../redux/contacts/contactsActions';
+import store from '../../redux/phonebook/store';
 
 export function ContactForm({ onSubmit }) {
+  // console.log(store);
+  // const dispatch = useDispatch();
+  // const contacts = useSelector(state => state.contacts.contacts)
+  // const filter = useSelector(state => state.contacts.filter)
+
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -71,3 +80,12 @@ ContactForm.propTypes = {
   number: PropTypes.number.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };
+
+// const mapStateToProps = ({ contacts: { phonebookContacts } }) =>
+//   phonebookContacts;
+
+// const mapDispatchToProps = dispatch => ({
+//   onSubmit: (name, number) => dispatch(addContact(name, number)),
+// });
+
+// export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
