@@ -12,6 +12,7 @@ import {
   deleteContact,
   filterContact,
 } from './redux/contacts/contactsActions';
+import * as storage from './services/localStorage';
 
 function App() {
   const contacts = useSelector(state => state.phonebookReducers.contacts);
@@ -37,15 +38,15 @@ function App() {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
+    storage.save('contacts', contacts);
   }, [contacts]);
 
-  const createContact = (name, number) => {
-    const contact = {
-      id: nanoid(),
-      name,
-      number,
-    };
+  const createContact = newContact => {
+    // const contact = {
+    //   id: nanoid(),
+    //   name,
+    //   number,
+    // };
     const dublicateContact = contacts.some(checkedContact => {
       return checkedContact.name.toLowerCase() === name.toLowerCase();
     });
@@ -55,7 +56,7 @@ function App() {
       return;
     }
 
-    dispatch(addContact(contact));
+    dispatch(addContact(newContact));
   };
 
   const deleteContact = contactId => {
@@ -68,6 +69,7 @@ function App() {
   };
 
   const getFilteredContacts = () => {
+    console.log(contacts);
     return contacts.filter(contact =>
       contact.name.toLowerCase().includes(filter.toLowerCase()),
     );
@@ -78,7 +80,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <Container title="Phonebook">
-          <ContactForm onSubmit={createContact} />
+          <ContactForm createContact={createContact} />
         </Container>
         <Container title="Contacts">
           <Filter value={filter} onChange={changeFilter} />

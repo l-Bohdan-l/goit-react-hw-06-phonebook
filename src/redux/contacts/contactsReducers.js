@@ -15,7 +15,7 @@ const contactsReducer = createReducer(contactsExample, {
     state.filter(contact => contact.id !== payload),
 });
 
-const filterReducer = createReducer('Bag', {
+const filterReducer = createReducer('', {
   [filterContact]: (state, { payload }) => payload,
 });
 
