@@ -33,9 +33,18 @@ function App() {
     const contactsFromStorage = localStorage.getItem('contacts');
     const parsedStoragedContacts = JSON.parse(contactsFromStorage);
     if (parsedStoragedContacts) {
-      dispatch(addContact(parsedStoragedContacts));
+      parsedStoragedContacts.map(storageContact => {
+        if (contacts.some(contact => contact.name === storageContact.name)) {
+          return;
+        }
+        dispatch(addContact(storageContact));
+      });
     }
   }, []);
+
+  // const contactsFromStorage = localStorage.getItem('contacts');
+  // const parsedStoragedContacts = JSON.parse(contactsFromStorage);
+  // console.log("LS", parsedStoragedContacts);
 
   useEffect(() => {
     storage.save('contacts', contacts);
@@ -48,18 +57,20 @@ function App() {
     //   number,
     // };
     const dublicateContact = contacts.some(checkedContact => {
-      return checkedContact.name.toLowerCase() === name.toLowerCase();
+      return (
+        checkedContact.name.toLowerCase() === newContact.name.toLowerCase()
+      );
     });
 
     if (dublicateContact) {
-      alert(`${name} is already in contacts`);
+      alert(`${newContact.name} is already in contacts`);
       return;
     }
 
     dispatch(addContact(newContact));
   };
 
-  const deleteContact = contactId => {
+  const handleDelete = contactId => {
     dispatch(deleteContact(contactId));
   };
 
@@ -76,6 +87,7 @@ function App() {
   };
 
   const filteredContacts = getFilteredContacts();
+
   return (
     <div className="App">
       <header className="App-header">
@@ -86,7 +98,7 @@ function App() {
           <Filter value={filter} onChange={changeFilter} />
           <ContactsList
             contacts={filteredContacts}
-            onDelete={deleteContact}
+            onDelete={handleDelete}
           ></ContactsList>
         </Container>
       </header>
