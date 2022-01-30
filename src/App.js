@@ -3,59 +3,43 @@ import React from 'react';
 import { ContactForm } from './components/ContactForm/ContactForm';
 import { ContactsList } from './components/ContactList/ContactList';
 import { Container } from './components/Container/Container';
-import { nanoid } from 'nanoid';
 import { Filter } from './components/Filter/Filter';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   addContact,
   deleteContact,
   filterContact,
 } from './redux/contacts/contactsActions';
-import * as storage from './services/localStorage';
+import { save } from './services/localStorage';
 
 function App() {
   const contacts = useSelector(state => state.phonebookReducers.contacts);
   const filter = useSelector(state => state.phonebookReducers.filter);
   const dispatch = useDispatch();
-  const [name, setName] = useState('');
-  console.log(filter);
-
-  // const [contacts, setContacts] = useState([
-  //   { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-  //   { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-  //   { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-  //   { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-  // ]);
-  // const [filter, setFilter] = useState('');
 
   useEffect(() => {
     const contactsFromStorage = localStorage.getItem('contacts');
     const parsedStoragedContacts = JSON.parse(contactsFromStorage);
     if (parsedStoragedContacts) {
       parsedStoragedContacts.map(storageContact => {
-        if (contacts.some(contact => contact.name === storageContact.name)) {
-          return;
+        if (
+          contacts.some(contact => {
+            return contact.name === storageContact.name;
+          })
+        ) {
+          return true;
         }
-        dispatch(addContact(storageContact));
+        return dispatch(addContact(storageContact));
       });
     }
   }, []);
 
-  // const contactsFromStorage = localStorage.getItem('contacts');
-  // const parsedStoragedContacts = JSON.parse(contactsFromStorage);
-  // console.log("LS", parsedStoragedContacts);
-
   useEffect(() => {
-    storage.save('contacts', contacts);
+    save('contacts', contacts);
   }, [contacts]);
 
   const createContact = newContact => {
-    // const contact = {
-    //   id: nanoid(),
-    //   name,
-    //   number,
-    // };
     const dublicateContact = contacts.some(checkedContact => {
       return (
         checkedContact.name.toLowerCase() === newContact.name.toLowerCase()
@@ -80,7 +64,6 @@ function App() {
   };
 
   const getFilteredContacts = () => {
-    console.log(contacts);
     return contacts.filter(contact =>
       contact.name.toLowerCase().includes(filter.toLowerCase()),
     );

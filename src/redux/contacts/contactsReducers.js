@@ -11,18 +11,6 @@ const contactsExample = [
 
 const contactsReducer = createReducer(contactsExample, {
   [addContact]: (state, { payload }) => [...state, payload],
-
-  //   const dublicateContact = state.some(checkedContact => {
-  //     return checkedContact.name.toLowerCase() === payload.name.toLowerCase();
-  //   });
-
-  //   if (dublicateContact) {
-  //     alert(`${payload.name} is already in contacts`);
-  //     return;
-  //   }
-  //   return [...state, payload]
-  // },
-
   [deleteContact]: (state, { payload }) =>
     state.filter(contact => contact.id !== payload),
 });
@@ -35,5 +23,3 @@ export default combineReducers({
   contacts: contactsReducer,
   filter: filterReducer,
 });
-
-// export default phonebookReducers;
